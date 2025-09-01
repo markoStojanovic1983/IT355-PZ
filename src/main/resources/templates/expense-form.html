@@ -1,10 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Expense Form</title>
+    <th:block th:insert="~{layout :: head-content}"></th:block>
+    <title th:text="${expense.id != null ? 'Edit Expense' : 'Add Expense'} + ' - Personal Finance Tracker'">Expense Form - Personal Finance Tracker</title>
 </head>
 <body>
-
+    <!-- Navigation -->
+    <th:block th:insert="~{layout :: navigation}"></th:block>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container py-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-3 border-primary">
+                <h1 class="text-dark" th:text="${expense.id != null ? 'Edit Expense' : 'Add New Expense'}">Expense Form</h1>
+                <a th:href="@{/expenses}" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i> Back to Expenses
+                </a>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-4">
+                            <form th:action="@{/expenses/save}" th:object="${expense}" method="post" class="needs-validation" novalidate>
+                                <input type="hidden" th:field="*{id}">
+                                
+                                <div class="mb-3">
+                                    <label for="description" class="form-label fw-medium">Description:</label>
+                                    <input type="text" 
+                                           th:field="*{description}" 
+                                           id="description" 
+                                           class="form-control" 
+                                           placeholder="Enter expense description (e.g., Groceries, Gas, Coffee)" 
+                                           required 
+                                           minlength="2"
+                                           maxlength="100"
+                                           pattern="[A-Za-z0-9\s\-,.!?()]+">
+                                    <div class="form-text">
+                                        2-100 characters, letters and numbers only
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid description (2-100 characters, letters and numbers only).
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="amount" class="form-label fw-medium">Amount ($):</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" 
+                                               th:field="*{amount}" 
+                                               id="amount" 
+                                               class="form-control" 
+                                               placeholder="0.00" 
+                                               step="0.01" 
+                                               min="0.01" 
+                                               max="999999.99"
+                                               required>
+                                        <div class="invalid-feedback">
+                                            Please enter an amount between $0.01 and $999,999.99.
+                                        </div>
+                                    </div>
+                                    <div class="form-text">
+                                        Enter amount between $0.01 and $999,999.99
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="date" class="form-label fw-medium">Date:</label>
+                                    <input type="date" 
+                                           th:field="*{date}" 
+                                           id="date" 
+                                           class="form-control" 
+                                           required
+                                           th:max="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
+                                           th:min="${#temporals.format(#temporals.createNow().minusYears(5), 'yyyy-MM-dd')}">
+                                    <div class="form-text">
+                                        Date cannot be in the future or more than 5 years ago
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please select a valid date.
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="categoryId" class="form-label fw-medium">Category:</label>
+                                    <select name="categoryId" id="categoryId" class="form-select" required>
+                                        <option value="">Select a category</option>
+                                        <option th:each="category : ${categories}" 
+                                                th:value="${category.id}" 
+                                                th:text="${category.name}"
+                                                th:selected="${expense.category != null and expense.category.id == category.id}">
+                                            Category Name
+                                        </option>
+                                    </select>
+                                    <div class="form-text">
+                                        Don't see your category? <a th:href="@{/categories/new}" class="text-decoration-none">Add a new one</a>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please select a category.
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary px-4">
+                                        <i class="fa fa-save"></i>
+                                        <span th:text="${expense.id != null ? 'Update Expense' : 'Save Expense'}">Save Expense</span>
+                                    </button>
+                                    <a th:href="@{/expenses}" class="btn btn-secondary px-4">
+                                        <i class="fa fa-times"></i> Cancel
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <th:block th:insert="~{layout :: footer}"></th:block>
+    
+    <!-- Scripts -->
+    <th:block th:insert="~{layout :: scripts}"></th:block>
+    <th:block th:insert="~{layout :: form-validation-script}"></th:block>
 </body>
 </html>

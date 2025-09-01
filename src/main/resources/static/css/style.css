@@ -1,0 +1,215 @@
+/* Custom Navbar Styling */
+.custom-navbar {
+    background: linear-gradient(135deg, #2c3e50, #34495e) !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.custom-navbar .navbar-brand:hover {
+    color: #3498db !important;
+}
+
+.custom-navbar .nav-link.active {
+    background-color: #3498db !important;
+    border-radius: 5px;
+}
+
+.custom-navbar .nav-link:hover {
+    background-color: rgba(52, 152, 219, 0.2);
+    border-radius: 5px;
+}
+
+/* Body Layout for Sticky Footer */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+}
+
+.main-content {
+    flex: 1;
+}
+
+/* Custom Dashboard Stats Animation */
+.stat-card {
+    transition: transform 0.3s ease;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Dashboard Stat Card Typography */
+.stat-card-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.stat-card-value {
+    font-size: 2rem;
+}
+
+.stat-card-subtitle {
+    font-size: 0.8rem;
+}
+
+/* Financial Amount Styling */
+.expense-amount,
+.text-danger.fw-bold {
+    color: #e74c3c !important;
+}
+
+.income-amount,
+.text-success.fw-bold {
+    color: #27ae60 !important;
+}
+
+.balance.positive {
+    color: #27ae60 !important;
+}
+
+.balance.negative {
+    color: #e74c3c !important;
+}
+
+/* Transaction Type Badges */
+.transaction-type {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.income-type {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.expense-type {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Custom Button Colors */
+.btn-expense {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+    color: white;
+}
+
+.btn-expense:hover {
+    background-color: #c0392b;
+    border-color: #c0392b;
+    color: white;
+}
+
+.btn-income {
+    background-color: #27ae60;
+    border-color: #27ae60;
+    color: white;
+}
+
+.btn-income:hover {
+    background-color: #219a52;
+    border-color: #219a52;
+    color: white;
+}
+
+.btn-category {
+    background-color: #9b59b6;
+    border-color: #9b59b6;
+    color: white;
+}
+
+.btn-category:hover {
+    background-color: #8e44ad;
+    border-color: #8e44ad;
+    color: white;
+}
+
+/* Custom Form Validation Styling */
+.form-control:valid {
+    border-color: #27ae60;
+}
+
+.form-control:invalid {
+    border-color: #e74c3c;
+}
+
+.form-select:valid {
+    border-color: #27ae60;
+}
+
+.form-select:invalid {
+    border-color: #e74c3c;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card,
+.table-responsive {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Custom Border Colors for Financial Context */
+.border-income {
+    border-color: #27ae60 !important;
+}
+
+.border-expense {
+    border-color: #e74c3c !important;
+}
+
+.border-balance-positive {
+    border-color: #27ae60 !important;
+}
+
+.border-balance-negative {
+    border-color: #e74c3c !important;
+}
+
+/* Footer Styling */
+.footer {
+    margin-top: auto;
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+    .stat-card {
+        margin-bottom: 1rem;
+    }
+    
+    .d-flex.gap-3 {
+        flex-direction: column !important;
+    }
+    
+    .btn-group-sm .btn {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .display-4 {
+        font-size: 1.8rem !important;
+    }
+    
+    .container {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}
+

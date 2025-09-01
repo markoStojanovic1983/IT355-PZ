@@ -1,10 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Categoriy form</title>
+    <th:block th:insert="~{layout :: head-content}"></th:block>
+    <title th:text="${category.id != null ? 'Edit Category' : 'Add Category'} + ' - Personal Finance Tracker'">Category Form - Personal Finance Tracker</title>
 </head>
 <body>
-
+    <!-- Navigation -->
+    <th:block th:insert="~{layout :: navigation}"></th:block>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container py-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-3 border-primary">
+                <h1 class="text-dark" th:text="${category.id != null ? 'Edit Category' : 'Add New Category'}">Category Form</h1>
+                <a th:href="@{/categories}" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i> Back to Categories
+                </a>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-4">
+                            <form th:action="@{/categories/save}" th:object="${category}" method="post" class="needs-validation" novalidate>
+                                <input type="hidden" th:field="*{id}">
+                                
+                                <div class="mb-4">
+                                    <label for="name" class="form-label fw-medium">Category Name:</label>
+                                    <input type="text" 
+                                           th:field="*{name}" 
+                                           id="name" 
+                                           class="form-control" 
+                                           placeholder="Enter category name (e.g., Food, Transport, Entertainment)" 
+                                           required 
+                                           minlength="2"
+                                           maxlength="50"
+                                           pattern="[A-Za-z0-9\s\-&]+">
+                                    <div class="form-text">
+                                        2-50 characters, letters and numbers only
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid category name (2-50 characters, letters and numbers only).
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-warning px-4">
+                                        <i class="fa fa-save"></i>
+                                        <span th:text="${category.id != null ? 'Update Category' : 'Save Category'}">Save Category</span>
+                                    </button>
+                                    <a th:href="@{/categories}" class="btn btn-secondary px-4">
+                                        <i class="fa fa-times"></i> Cancel
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <th:block th:insert="~{layout :: footer}"></th:block>
+    
+    <!-- Scripts -->
+    <th:block th:insert="~{layout :: scripts}"></th:block>
+    <th:block th:insert="~{layout :: form-validation-script}"></th:block>
 </body>
 </html>

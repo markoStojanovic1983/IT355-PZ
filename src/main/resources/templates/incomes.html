@@ -1,10 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Incomes</title>
+    <th:block th:insert="~{layout :: head-content}"></th:block>
+    <title>Incomes - Personal Finance Tracker</title>
 </head>
 <body>
-
+    <!-- Navigation -->
+    <th:block th:insert="~{layout :: navigation}"></th:block>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container py-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-3 border-primary">
+                <h1 class="text-dark">Income Sources</h1>
+                <a th:href="@{/incomes/new}" class="btn btn-success">
+                    <i class="fa fa-plus"></i> Add New Income
+                </a>
+            </div>
+            
+            <div class="card shadow-sm">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${#lists.isEmpty(incomes)}">
+                                <td colspan="5" class="text-center text-muted py-5">
+                                    <i class="fa fa-money-bill-wave fa-3x mb-3 d-block"></i>
+                                    No income records found. <a th:href="@{/incomes/new}" class="text-decoration-none">Add the first one!</a>
+                                </td>
+                            </tr>
+                            <tr th:each="income : ${incomes}">
+                                <td th:text="${income.id}" class="fw-medium">1</td>
+                                <td th:text="${income.description}">Salary</td>
+                                <td class="fw-bold text-success">$<span th:text="${#numbers.formatDecimal(income.amount, 1, 2)}">0.00</span></td>
+                                <td th:text="${#temporals.format(income.date, 'yyyy-MM-dd')}">2024-01-01</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a th:href="@{/incomes/edit/{id}(id=${income.id})}" class="btn btn-outline-secondary">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </a>
+                                        <a th:href="@{/incomes/delete/{id}(id=${income.id})}" 
+                                           class="btn btn-outline-danger"
+                                           onclick="return confirm('Are you sure you want to delete this income record?')">
+                                            <i class="fa fa-trash"></i> Delete
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <th:block th:insert="~{layout :: footer}"></th:block>
+    
+    <!-- Scripts -->
+    <th:block th:insert="~{layout :: scripts}"></th:block>
 </body>
 </html>

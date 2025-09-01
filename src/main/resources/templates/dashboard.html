@@ -1,10 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <th:block th:insert="~{layout :: head-content}"></th:block>
+    <title>Dashboard - Personal Finance Tracker</title>
 </head>
 <body>
-
+    <!-- Navigation -->
+    <th:block th:insert="~{layout :: navigation}"></th:block>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container py-4">
+            <h1 class="mb-4">Financial Dashboard</h1>
+            
+            <!-- User Info -->
+            <div class="card mb-4 border-start border-4 border-primary">
+                <div class="card-body">
+                    <h2 class="card-title h4 text-dark mb-2">Welcome, <span th:text="${userProfile.userName}">User</span>!</h2>
+                    <p class="card-text mb-0">Monthly Budget: $<span th:text="${#numbers.formatDecimal(userProfile.monthlyBudget, 1, 2)}">0.00</span></p>
+                </div>
+            </div>
+            
+            <!-- Dashboard Stats -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="card shadow-sm border-0 border-top border-4 border-success text-center stat-card h-100">
+                        <div class="card-body p-4 d-flex flex-column">
+                            <h3 class="card-title text-muted text-uppercase mb-3 stat-card-title">INCOME</h3>
+                            <div class="stat-value fw-bold text-dark mb-2 stat-card-value">$<span th:text="${#numbers.formatDecimal(totalIncomes, 1, 2)}">0.00</span></div>
+                            <p class="card-text text-muted mb-0 mt-auto stat-card-subtitle"><span th:text="${incomeCount}">0</span> records</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="card shadow-sm border-0 border-top border-4 border-danger text-center stat-card h-100">
+                        <div class="card-body p-4 d-flex flex-column">
+                            <h3 class="card-title text-muted text-uppercase mb-3 stat-card-title">EXPENSES</h3>
+                            <div class="stat-value fw-bold text-dark mb-2 stat-card-value">$<span th:text="${#numbers.formatDecimal(totalExpenses, 1, 2)}">0.00</span></div>
+                            <p class="card-text text-muted mb-0 mt-auto stat-card-subtitle"><span th:text="${expenseCount}">0</span> records</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="card shadow-sm border-0 border-top border-4 text-center stat-card h-100" 
+                         th:classappend="${balance >= 0} ? 'border-success' : 'border-danger'">
+                        <div class="card-body p-4 d-flex flex-column">
+                            <h3 class="card-title text-muted text-uppercase mb-3 stat-card-title">BALANCE</h3>
+                            <div class="stat-value fw-bold text-dark mb-2 stat-card-value">$<span th:text="${#numbers.formatDecimal(balance, 1, 2)}">0.00</span></div>
+                            <p class="card-text text-muted mb-0 mt-auto stat-card-subtitle" th:text="${balance >= 0} ? 'Positive' : 'Negative'">Status</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="card shadow-sm border-0 border-top border-4 border-warning text-center stat-card h-100">
+                        <div class="card-body p-4 d-flex flex-column">
+                            <h3 class="card-title text-muted text-uppercase mb-3 stat-card-title">CATEGORIES</h3>
+                            <div class="stat-value fw-bold text-dark mb-2 stat-card-value"><span th:text="${categoryCount}">0</span></div>
+                            <p class="card-text text-muted mb-0 mt-auto stat-card-subtitle">available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title h4 text-dark mb-4">Quick Actions</h2>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a th:href="@{/expenses/new}" class="btn btn-danger">
+                            <i class="fa fa-plus"></i> Add Expense
+                        </a>
+                        <a th:href="@{/incomes/new}" class="btn btn-success">
+                            <i class="fa fa-plus"></i> Add Income
+                        </a>
+                        <a th:href="@{/transactions}" class="btn btn-secondary">
+                            <i class="fa fa-list"></i> View All Transactions
+                        </a>
+                        <a th:href="@{/categories/new}" class="btn btn-warning">
+                            <i class="fa fa-plus"></i> Add Category
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <th:block th:insert="~{layout :: footer}"></th:block>
+    
+    <!-- Scripts -->
+    <th:block th:insert="~{layout :: scripts}"></th:block>
 </body>
 </html>
