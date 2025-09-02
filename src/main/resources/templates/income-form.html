@@ -68,8 +68,8 @@
                                 
                                 <div class="mb-4">
                                     <label for="date" class="form-label fw-medium">Date:</label>
-                                    <input type="date" 
-                                           th:field="*{date}" 
+                                    <input type="date"
+                                           th:value="${income.date != null ? #temporals.format(income.date, 'yyyy-MM-dd') : ''}"
                                            id="date" 
                                            class="form-control" 
                                            required
